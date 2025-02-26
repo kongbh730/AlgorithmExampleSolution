@@ -6,68 +6,53 @@ public class Main {
     public static void main(String[] args) {
         int N = sc.nextInt();
         int M = sc.nextInt();
-
         findAnswer(N, M);
     }
 
     public static void findAnswer(int N, int M) {
-        int i = 0, j = 0, K = N * N, row = 0, col = 0;
-        int [][] square = new int[N][N];
+        int[][] square = new int[N][N];
+        int num = N * N;
+        int x = 0, y = 0; // 시작 위치
+        int row = 0, col = 0; // M의 위치 저장
+
+        // 방향 (↓, →, ↑, ←) 순서로 이동
+        int[] dx = {1, 0, -1, 0};
+        int[] dy = {0, 1, 0, -1};
         int direction = 0;
 
-        while(K != 0){
-            square[i][j] = K;
-
-            if(direction == 0){ //아래로
-                if(i + 1 >= N || square[i + 1][j] != 0){
-                    direction = (direction + 1) % 4;//오른쪽으로 방향 전환
-                    j += 1;
-                }
-                else{
-                    i += 1;
-                }
-            }
-            else if(direction == 1){// 오른쪽으로
-                if(j + 1 >= N || square[i][j + 1] != 0){
-                    direction = (direction + 1) % 4;//위쪽으로 방향 전환
-                    i -= 1;
-                }
-                else{
-                    j += 1;
-                }
-            }
-            else if(direction == 2){// 위로
-                if(i - 1 < 0 || square[i - 1][j] != 0){
-                    direction = (direction + 1) % 4;//왼쪽으로 방향 전환
-                    j -= 1;
-                }
-                else{
-                    i -= 1;
-                }
-            }
-            else if(direction == 3){ // 왼쪽으로
-                if(j - 1 < 0 || square[i][j - 1] != 0){
-                    direction = 0;//아래쪽으로 방향 전환
-                    i += 1;
-                }
-                else{
-                    j -= 1;
-                }
+        while (num > 0) {
+            square[x][y] = num; // 현재 위치에 숫자 채우기
+            if (num == M) {
+                row = x + 1;
+                col = y + 1;
             }
 
-            K--;
+            // 다음 위치 계산
+            int nx = x + dx[direction];
+            int ny = y + dy[direction];
+
+            // 범위를 벗어나거나 이미 채워진 경우 방향 변경
+            if (nx < 0 || ny < 0 || nx >= N || ny >= N || square[nx][ny] != 0) {
+                direction = (direction + 1) % 4; // 방향 전환
+                nx = x + dx[direction];
+                ny = y + dy[direction];
+            }
+
+            // 위치 업데이트
+            x = nx;
+            y = ny;
+            num--;
         }
 
-        for(i = 0; i < N; i++){
-            for(j = 0; j < N; j++){
-                System.out.print(square[i][j] + " ");
-                if(square[i][j] == M){
-                    row = i + 1;
-                    col = j + 1;
-                }
+        // **StringBuilder 사용하여 출력 최적화**
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                sb.append(square[i][j]).append(" ");
             }
-            System.out.println();
+            sb.append("\n");
         }
+        System.out.print(sb);
         System.out.println(row + " " + col);
     }
 }
