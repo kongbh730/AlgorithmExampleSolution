@@ -11,4 +11,6 @@ select ROUTE,
     concat(round(avg(D_BETWEEN_DIST), 2), "km") as AVERAGE_DISTANCE -- 소수 셋째 자리 반올림 : 소수점 아래 두자리까지 출력
 from SUBWAY_DISTANCE 
 group by ROUTE
-order by ROUND(SUM(D_BETWEEN_DIST), 2) DESC;
+-- order by TOTAL_DISTANCE desc;
+-- order by round(sum(D_BETWEEN_DIST)) desc;
+order by sum(D_BETWEEN_DIST) desc;
