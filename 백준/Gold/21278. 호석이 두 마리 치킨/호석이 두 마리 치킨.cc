@@ -58,11 +58,10 @@ void find_answer(int N, int M, vector<vector<int>>& road) {
 				sum += min(road[k][i], road[k][j]) * 2;
 			}
 
-			if (sum < min_sum) {
+			if (sum < min_sum || (sum == min_sum && (i < A || (i == A && j < B)))) {
 				min_sum = sum;
 				A = i;
 				B = j;
-				//cout << A << " " << B << " " << min_sum << "\n";
 			}
 		}
 	}
@@ -85,11 +84,11 @@ void floyd_warshall(int N, vector<vector<int>>& road) {
 	}
 	*/
 
-	for (i = 1; i <= N; i++) {
-		for (j = 1; j <= N; j++) {
-			for (k = 1; k <= N; k++) {
+	for (k = 1; k <= N; k++) {
+		for (i = 1; i <= N; i++) {
+			for (j = 1; j <= N; j++) {
 				if (road[i][k] < INF && road[k][j] < INF) {
-					road[i][j] = min(road[i][k] + road[k][j], road[i][j]);
+					road[i][j] = min(road[i][j], road[i][k] + road[k][j]);
 				}
 			}
 		}
