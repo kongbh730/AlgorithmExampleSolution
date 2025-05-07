@@ -3,6 +3,8 @@
 -- 결과는 카테고리명을 기준으로 오름차순 정렬해주세요.
 SELECT BOOK.CATEGORY, sum(BOOK_SALES.SALES) as TOTAL_SALES
 from BOOK_SALES join BOOK on BOOK_SALES.BOOK_ID = BOOK.BOOK_ID
-where year(BOOK_SALES.SALES_DATE) = 2022 and month(BOOK_SALES.SALES_DATE) = 1
+-- where year(BOOK_SALES.SALES_DATE) = 2022 and month(BOOK_SALES.SALES_DATE) = 1
+-- where date_format(BOOK_SALES.SALES_DATE, '%Y-%m') = '2022-01'
+where BOOK_SALES.SALES_DATE between '2022-01-01' and '2022-01-31'
 group by CATEGORY
 order by CATEGORY asc;
