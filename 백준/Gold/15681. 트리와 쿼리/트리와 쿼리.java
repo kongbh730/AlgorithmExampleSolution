@@ -92,8 +92,8 @@ public class Main {
         int i;
 
         // DFS 시작 (루트 노드 R에서)
-        dfs(R, -1);
-        //dfsIterative(R);
+        //dfs(R, -1);
+        dfsIterative(R);
 
         // 쿼리 처리
         for (i = 0; i < Q; i++) {
