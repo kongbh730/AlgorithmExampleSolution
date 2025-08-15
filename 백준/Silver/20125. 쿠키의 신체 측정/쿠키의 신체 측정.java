@@ -1,4 +1,7 @@
 import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class Main {
     static Scanner sc = new Scanner(System.in);
@@ -6,26 +9,41 @@ public class Main {
     static int N;
     static int heartX, heartY, hipY;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         inputData();
         findAnswer();
     }
 
-    public static void inputData(){
-        int i, j;
-        String temp;
+//    public static void inputData(){
+//        int i, j;
+//        String temp;
+//
+//        N = sc.nextInt();
+//        map = new char[N][N];
+//
+//        for(i = 0; i < N; i++){
+//            temp = sc.next();
+//            for(j = 0; j < N; j++){
+//                map[i][j] = temp.charAt(j);
+//            }
+//        }
+//
+//        sc.close();
+//    }
 
-        N = sc.nextInt();
+    public static void inputData() throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        N = Integer.parseInt(br.readLine()); // 첫 줄: N
         map = new char[N][N];
 
-        for(i = 0; i < N; i++){
-            temp = sc.next();
-            for(j = 0; j < N; j++){
-                map[i][j] = temp.charAt(j);
+        for (int i = 0; i < N; i++) {
+            String temp = br.readLine(); // 한 줄 읽기
+            for (int j = 0; j < N; j++) {
+                map[i][j] = temp.charAt(j); // 한 글자씩 저장
             }
         }
-
-        sc.close();
+        br.close();
     }
 
     public static void findAnswer(){
