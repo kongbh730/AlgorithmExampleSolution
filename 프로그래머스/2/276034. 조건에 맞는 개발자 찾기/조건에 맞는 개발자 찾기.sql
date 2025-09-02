@@ -8,7 +8,19 @@
 -- select * from DEVELOPERS;
 -- select CODE from SKILLCODES where NAME in ('Python', 'C#');
 
-select ID, EMAIL, FIRST_NAME, LAST_NAME
-from DEVELOPERS 
-where SKILL_CODE & 1024 or SKILL_CODE & 256
-order by ID asc;
+# select ID, EMAIL, FIRST_NAME, LAST_NAME
+# from DEVELOPERS 
+# where SKILL_CODE & (
+#     SELECT SUM(CODE) FROM SKILLCODES WHERE NAME IN ('Python', 'C#')
+# )
+# order by ID asc;
+
+SELECT ID, EMAIL, FIRST_NAME, LAST_NAME
+FROM DEVELOPERS
+-- 둘이 외래키참조방식이 아니라 JOIN은 사용 불가
+WHERE SKILL_CODE & (
+    SELECT SUM(CODE)
+    FROM SKILLCODES
+    WHERE NAME IN ("Python", "C#")
+)
+ORDER BY ID ASC;
