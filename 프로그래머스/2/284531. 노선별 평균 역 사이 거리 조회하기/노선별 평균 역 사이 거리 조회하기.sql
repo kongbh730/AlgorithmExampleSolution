@@ -6,11 +6,18 @@
 -- 총 누계거리는 소수 둘째자리에서, 평균 역 사이 거리는 소수 셋째 자리에서 반올림 한 뒤 단위(km)를 함께 출력해주세요.
 -- 결과는 총 누계 거리를 기준으로 내림차순 정렬해주세요.
 
-select ROUTE, 
-    concat(round(sum(D_BETWEEN_DIST), 1), "km") as TOTAL_DISTANCE, -- 소수 둘째 자리 반올림 : 소수점 아래 한자리까지 출력
-    concat(round(avg(D_BETWEEN_DIST), 2), "km") as AVERAGE_DISTANCE -- 소수 셋째 자리 반올림 : 소수점 아래 두자리까지 출력
-from SUBWAY_DISTANCE 
-group by ROUTE
--- order by TOTAL_DISTANCE desc;
--- order by round(sum(D_BETWEEN_DIST)) desc;
-order by sum(D_BETWEEN_DIST) desc;
+# select ROUTE, 
+#     concat(round(sum(D_BETWEEN_DIST), 1), "km") as TOTAL_DISTANCE, -- 소수 둘째 자리 반올림 : 소수점 아래 한자리까지 출력
+#     concat(round(avg(D_BETWEEN_DIST), 2), "km") as AVERAGE_DISTANCE -- 소수 셋째 자리 반올림 : 소수점 아래 두자리까지 출력
+# from SUBWAY_DISTANCE 
+# group by ROUTE
+# -- order by TOTAL_DISTANCE desc;
+# -- order by round(sum(D_BETWEEN_DIST)) desc;
+# order by sum(D_BETWEEN_DIST) desc;
+
+SELECT ROUTE, 
+    CONCAT(ROUND(SUM(D_BETWEEN_DIST), 1), 'km') AS TOTAL_DISTANCE,
+    CONCAT(ROUND(AVG(D_BETWEEN_DIST), 2), 'km') AS AVERAGE_DISTANCE
+FROM SUBWAY_DISTANCE
+GROUP BY ROUTE
+ORDER BY SUM(D_BETWEEN_DIST) DESC
