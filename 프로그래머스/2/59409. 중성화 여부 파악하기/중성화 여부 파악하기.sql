@@ -4,10 +4,18 @@
 -- 이때 중성화가 되어있다면 'O', 아니라면 'X'라고 표시해주세요. 
 
 
-select ANIMAL_ID, NAME, 
-(case 
-    when SEX_UPON_INTAKE like('%Neutered%') or SEX_UPON_INTAKE like('%Spayed%')
-    then 'O' 
-    else 'X'
-end) as '중성화'
-from ANIMAL_INS 
+# select ANIMAL_ID, NAME, 
+# (case 
+#     when SEX_UPON_INTAKE like('%Neutered%') or SEX_UPON_INTAKE like('%Spayed%')
+#     then 'O' 
+#     else 'X'
+# end) as '중성화'
+# from ANIMAL_INS
+
+SELECT ANIMAL_ID, NAME,
+    CASE
+        WHEN SEX_UPON_INTAKE LIKE ("%Neutered%") OR SEX_UPON_INTAKE LIKE ("%Spayed%")
+        THEN 'O'
+        ELSE 'X'
+    END AS '중성화'
+FROM ANIMAL_INS
