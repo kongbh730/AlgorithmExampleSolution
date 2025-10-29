@@ -3,19 +3,31 @@
 -- 이때 각 분기에는 'Q' 를 붙이고 분기에 대해 오름차순으로 정렬해주세요. 
 -- 대장균 개체가 분화되지 않은 분기는 없습니다.
 
-select concat((
-    case
-        -- when month(DIFFERENTIATION_DATE) in (1, 2, 3) then '1Q'
-        -- when month(DIFFERENTIATION_DATE) in (4, 5, 6) then '2Q'
-        -- when month(DIFFERENTIATION_DATE) in (7, 8, 9) then '3Q'
-        -- when month(DIFFERENTIATION_DATE) in (10, 11, 12) then '4Q'
+# select concat((
+#     case
+#         -- when month(DIFFERENTIATION_DATE) in (1, 2, 3) then '1Q'
+#         -- when month(DIFFERENTIATION_DATE) in (4, 5, 6) then '2Q'
+#         -- when month(DIFFERENTIATION_DATE) in (7, 8, 9) then '3Q'
+#         -- when month(DIFFERENTIATION_DATE) in (10, 11, 12) then '4Q'
     
-        when month(DIFFERENTIATION_DATE) in (1, 2, 3) then 1
-        when month(DIFFERENTIATION_DATE) in (4, 5, 6) then 2
-        when month(DIFFERENTIATION_DATE) in (7, 8, 9) then 3
-        when month(DIFFERENTIATION_DATE) in (10, 11, 12) then 4
-    end
-), 'Q') as QUARTER, count(*) as ECOLI_COUNT
-from ECOLI_DATA
-group by QUARTER
-order by QUARTER asc;
+#         when month(DIFFERENTIATION_DATE) in (1, 2, 3) then 1
+#         when month(DIFFERENTIATION_DATE) in (4, 5, 6) then 2
+#         when month(DIFFERENTIATION_DATE) in (7, 8, 9) then 3
+#         when month(DIFFERENTIATION_DATE) in (10, 11, 12) then 4
+#     end
+# ), 'Q') as QUARTER, count(*) as ECOLI_COUNT
+# from ECOLI_DATA
+# group by QUARTER
+# order by QUARTER asc;
+
+SELECT 
+    (CASE 
+        WHEN MONTH(DIFFERENTIATION_DATE) IN (1, 2, 3) THEN '1Q'
+        WHEN MONTH(DIFFERENTIATION_DATE) IN (4, 5, 6) THEN '2Q'
+        WHEN MONTH(DIFFERENTIATION_DATE) IN (7, 8, 9) THEN '3Q'
+        WHEN MONTH(DIFFERENTIATION_DATE) IN (10, 11, 12) THEN '4Q'
+    END) AS QUARTER,
+    COUNT(*) AS ECOLI_COUNT
+FROM ECOLI_DATA
+GROUP BY QUARTER
+ORDER BY QUARTER ASC
