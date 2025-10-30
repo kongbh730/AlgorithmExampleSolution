@@ -4,8 +4,19 @@
 -- 이때 결과는 개체의 ID 에 대해 오름차순 정렬해주세요. order by ID
 -- 직계 자식까지만
 
-select P.ID, count(C.ID) as CHILD_COUNT
-from ECOLI_DATA P
-left join ECOLI_DATA C on P.ID = C.PARENT_ID
-group by P.ID
-order by P.ID;
+# select P.ID, count(C.ID) as CHILD_COUNT
+# from ECOLI_DATA P
+# right join ECOLI_DATA C on P.ID = C.PARENT_ID
+# group by P.ID
+# order by P.ID;
+
+# select P.ID, count(C.ID) as CHILD_COUNT
+# from ECOLI_DATA P
+# left join ECOLI_DATA C on P.ID = C.PARENT_ID
+# group by P.ID
+# order by P.ID;
+
+SELECT PARENT.ID, COUNT(CHILD.ID) AS CHILD_COUNT
+FROM ECOLI_DATA PARENT LEFT JOIN ECOLI_DATA CHILD ON PARENT.ID = CHILD.PARENT_ID
+GROUP BY PARENT.ID
+ORDER BY PARENT.ID ASC
