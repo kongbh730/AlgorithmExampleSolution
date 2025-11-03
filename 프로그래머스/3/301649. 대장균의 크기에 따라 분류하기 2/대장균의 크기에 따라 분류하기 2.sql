@@ -8,12 +8,22 @@
 -- 단, 총 데이터의 수는 4의 배수이며 
 -- 같은 사이즈의 대장균 개체가 서로 다른 이름으로 분류되는 경우는 없습니다.
 
-select  ID, 
-case ntile(4) over (order by SIZE_OF_COLONY desc)
-    when 1 then 'CRITICAL'
-    when 2 then 'HIGH'
-    when 3 then 'MEDIUM'
-    else 'LOW'
-  end as COLONY_NAME
-from ECOLI_DATA 
-order by ID;
+# select  ID, 
+# case ntile(4) over (order by SIZE_OF_COLONY desc)
+#     when 1 then 'CRITICAL'
+#     when 2 then 'HIGH'
+#     when 3 then 'MEDIUM'
+#     else 'LOW'
+#   end as COLONY_NAME
+# from ECOLI_DATA 
+# order by ID;
+
+SELECT ID, 
+    (CASE NTILE(4) OVER (ORDER BY SIZE_OF_COLONY ASC)
+        WHEN 1 THEN 'LOW'
+        WHEN 2 THEN 'MEDIUM'
+        WHEN 3 THEN 'HIGH'
+        ELSE 'CRITICAL'
+    END) AS COLONY_NAME
+FROM ECOLI_DATA
+ORDER BY ID ASC;
