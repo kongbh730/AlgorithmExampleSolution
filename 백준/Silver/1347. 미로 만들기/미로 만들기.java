@@ -1,40 +1,84 @@
 import java.util.Scanner;
 
 public class Main {
-    static class Hongjoon{
-        int [][] direction = {{0,1}, {1,0}, {0, -1}, {-1,0}};
-        int dir = 1;
-        int x;
-        int y;
+  
+//    static class Hongjoon{
+//        int [][] direction = {{0,1}, {1,0}, {0, -1}, {-1,0}};
+//        int dir = 1;
+//        int x;
+//        int y;
+//
+//        public Hongjoon(int x, int y) {
+//            this.x = x;
+//            this.y = y;
+//        }
+//
+//        public int getDir() {
+//            return dir;
+//        }
+//
+//        public void setDir(int dir) {
+//            this.dir = dir;
+//        }
+//
+//        public int getX() {
+//            return x;
+//        }
+//
+//        public void setX(int x) {
+//            this.x = x;
+//        }
+//
+//        public int getY() {
+//            return y;
+//        }
+//
+//        public void setY(int y) {
+//            this.y = y;
+//        }
+//    }
+
+    static class Hongjoon {
+        // 1. 내부 상태 캡슐화
+        private int x, y;
+        private int dir = 1; // 초기 남쪽 방향 (코드의 direction 배열 기준)
+
+        // 방향 데이터는 클래스 내부에서 상수로 관리
+        private static final int[][] DELTAS = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
 
         public Hongjoon(int x, int y) {
             this.x = x;
             this.y = y;
         }
 
-        public int getDir() {
-            return dir;
+        // 2. 명령을 수행하는 메서드 (동사 중심)
+        public void executeCommand(char cmd, char[][] map) {
+            if (cmd == 'R') {
+                rotateRight();
+            } else if (cmd == 'L') {
+                rotateLeft();
+            } else if (cmd == 'F') {
+                moveForward(map);
+            }
         }
 
-        public void setDir(int dir) {
-            this.dir = dir;
+        private void rotateRight() {
+            this.dir = (this.dir + 1) % 4;
         }
 
-        public int getX() {
-            return x;
+        private void rotateLeft() {
+            this.dir = (this.dir + 3) % 4;
         }
 
-        public void setX(int x) {
-            this.x = x;
+        private void moveForward(char[][] map) {
+            this.y += DELTAS[dir][0];
+            this.x += DELTAS[dir][1];
+            map[this.y][this.x] = '.'; // 방문 표시
         }
 
-        public int getY() {
-            return y;
-        }
-
-        public void setY(int y) {
-            this.y = y;
-        }
+        // 좌표 정보가 필요할 때만 Getter 제공
+        public int getX() { return x; }
+        public int getY() { return y; }
     }
 
     public static void main(String[] args) {
@@ -72,18 +116,20 @@ public class Main {
         map[hongjoon.getY()][hongjoon.getX()] = '.';
         for(i = 0; i < string.length; i++){
             if(string[i] == 'R'){//오른쪽 회전
-                hongjoon.setDir((hongjoon.getDir() + 1) % 4);
+                hongjoon.executeCommand('R',map);
                 //System.out.println(hongjoon.getDir());
                 //System.out.println(Arrays.toString(hongjoon.direction[hongjoon.getDir()]));
             }
             else if(string[i] == 'L'){//왼쪽 회전
-                hongjoon.setDir((hongjoon.getDir() + 3) % 4);
+                hongjoon.executeCommand('L',map);
+                //hongjoon.setDir((hongjoon.getDir() + 3) % 4);
                 //System.out.println(hongjoon.getDir());
                 //System.out.println(Arrays.toString(hongjoon.direction[hongjoon.getDir()]));
             }
             else if(string[i] == 'F'){//전진
-                hongjoon.setX(hongjoon.getX() + hongjoon.direction[hongjoon.getDir()][1]);
-                hongjoon.setY(hongjoon.getY() + hongjoon.direction[hongjoon.getDir()][0]);
+                hongjoon.executeCommand('F',map);
+                //hongjoon.setX(hongjoon.getX() + hongjoon.direction[hongjoon.getDir()][1]);
+                //hongjoon.setY(hongjoon.getY() + hongjoon.direction[hongjoon.getDir()][0]);
                 map[hongjoon.getY()][hongjoon.getX()] = '.';
             }
         }
